@@ -1,0 +1,57 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  HTTPResponse:
+    Type: Number
+    Default: 302
+    AllowedValues: [301, 302]
+    Description: "The HTTP response status code."
+  NewDomain:
+    Type: String
+    Description: "New domain to redirect to."
+Resources:
+  GetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: "Handles GET requests."
+      Handler: get.handler
+      Runtime: nodejs6.10
+      CodeUri: ./lambda
+      Environment:
+        Variables:
+          NEW_DOMAIN: !Ref NewDomain
+          HTTP_RESPONSE: !Ref HTTPResponse
+      Events:
+        GetProxy:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: get
+        GetCustom:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+  AnyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: "Handles everything except GET requests."
+      Handler: any.handler
+      Runtime: nodejs6.10
+      CodeUri: ./lambda
+      Environment:
+        Variables:
+          NEW_DOMAIN: !Ref NewDomain
+          HTTP_RESPONSE: !Ref HTTPResponse
+      Events:
+        AnyProxy:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+        AnyCustom:
+          Type: Api
+          Properties:
+            Path: /
+            Method: any

@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  HTTPResponse:
+    AllowedValues:
+    - 301
+    - 302
+    Default: 302
+    Description: The HTTP response status code.
+    Type: Number
+  NewDomain:
+    Description: New domain to redirect to.
+    Type: String
+Resources:
+  AnyFunction:
+    Properties:
+      CodeUri: s3://candoris-redirector/9eed9a01cd31bb2b6c8498f47a615b91
+      Description: Handles everything except GET requests.
+      Environment:
+        Variables:
+          HTTP_RESPONSE:
+            Ref: HTTPResponse
+          NEW_DOMAIN:
+            Ref: NewDomain
+      Events:
+        AnyCustom:
+          Properties:
+            Method: any
+            Path: /
+          Type: Api
+        AnyProxy:
+          Properties:
+            Method: any
+            Path: /{proxy+}
+          Type: Api
+      Handler: any.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+  GetFunction:
+    Properties:
+      CodeUri: s3://candoris-redirector/9eed9a01cd31bb2b6c8498f47a615b91
+      Description: Handles GET requests.
+      Environment:
+        Variables:
+          HTTP_RESPONSE:
+            Ref: HTTPResponse
+          NEW_DOMAIN:
+            Ref: NewDomain
+      Events:
+        GetCustom:
+          Properties:
+            Method: get
+            Path: /
+          Type: Api
+        GetProxy:
+          Properties:
+            Method: get
+            Path: /{proxy+}
+          Type: Api
+      Handler: get.handler
+      Runtime: nodejs6.10
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
