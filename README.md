@@ -41,20 +41,21 @@ Amazon S3 is object storage built to store and retrieve any amount of data fro
 Serverless computing allows you to build and run applications and services without thinking about servers. Serverless applications don't require you to provision, scale, and manage any servers. You can build them for nearly any type of application or backend service, and everything required to run and scale your application with high availability is handled for you. Building serverless applications means that your developers can focus on their core product instead of worrying about managing and operating servers or runtimes, either in the cloud or on-premises.
 
 Ex:
-
+![Serverless computing example](https://github.com/abushong/serverless-redirect/blob/master/images/ServerlessComputingExample.png "Serverless computing example")
 
  
 ### AWS Lambda:
 Goes hand in hand with serverless computing. Lambda is a serverless computing platform that can be triggered by events. AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume - there is no charge when your code is not running. With Lambda, you can run code for virtually any type of application or backend service - all with zero administration. Just upload your code and Lambda takes care of everything required to run and scale your code with high availability. You can set up your code to automatically trigger from other AWS services or call it directly from any web or mobile app. You can build serverless backends using AWS Lambda to handle web, mobile, Internet of Things (IoT), and 3rd party API requests.
 
 Ex:
-
+![Lambda Example](https://github.com/abushong/serverless-redirect/blob/master/images/AWSLambdaExample.png "Lambda Example")
 
 
 ### CloudFormation:
 Allows you to model and configure your AWS resources by declaratively describing your resources in a template. CF manages provisioning and configuring these resources. All the resources exist in a YAML or JSON template (IAC – Infrastructure as Code). 
 
 Ex:
+![CloudFormation example](https://github.com/abushong/serverless-redirect/blob/master/images/CloudFormationExample.png "CloudFormation Example")
 
 ### AWS SAM (Serverless Application model):
 "AWS SAM is CF on crack!" AWS SAM is a model used to define serverless applications on AWS. AWS SAM is based on AWS CloudFormation. A serverless application is defined in a CloudFormation template and deployed as a CloudFormation stack. AWS SAM defines a set of objects which can be included in a CloudFormation template to describe common components of serverless applications easily.  SAM supports special resource types that makes defining resources a lot easier. AWS SAM allows us to include "AWS::Serverless::Function" in the CF template. Also allows us to use the cloudformation command in the AWS CLI to package and deploy artifacts to S3.
